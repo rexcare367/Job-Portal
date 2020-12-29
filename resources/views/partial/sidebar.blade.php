@@ -24,8 +24,9 @@
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <!-- Add icons to the links using the .nav-icon class
              with font-awesome or any other icon font library -->
-        <li class="nav-item">
-          <a href="{{ route('admin.dashboard') }}" class="nav-link active">
+        @if(auth()->user()->hasRole('superadmin') || auth()->user()->hasRole('admin'))
+        <li class="nav-item menu-open">
+          <a href="{{ route('admin.dashboard') }}" class="nav-link @if(request()->is('admin/dashboard')) active @endif">
             <i class="nav-icon fas fa-tachometer-alt"></i>
             <p>
               Dashboard
@@ -33,8 +34,8 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link">
-            <i class="fas fa-briefcase"></i>
+          <a href="{{ route('admin.jobs.index') }}" class="nav-link @if(request()->is('admin/jobs*')) active @endif">
+            <i class="nav-icon fas fa-briefcase"></i>
             <p>
               Jobs
               <i class="fas fa-angle-left right"></i>
@@ -42,16 +43,14 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="#"
-                class="nav-link">
-                <i class="fas fa-edit"></i>
+              <a href="{{ route('admin.jobs.index') }}" class="nav-link @if(request()->is('admin/settings*')) active @endif">
+                <i class="far fa-circle nav-icon"></i>
                 <p>All Jobs</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="#"
-                class="nav-link">
-                <i class="fas fa-edit"></i>
+              <a href="{{ route('admin.jobs.create') }}" class="nav-link">
+                <i class="fas fa-edit nav-icon"></i>
                 <p>Create Job</p>
               </a>
             </li>
@@ -67,14 +66,16 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-                class="nav-link">
-                <i class="fas fa-sign-out-alt"></i>
+              <a href="#" class="nav-link"
+                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                <i class="fas fa-sign-out-alt nav-icon"></i>
                 <p>Logout</p>
               </a>
             </li>
           </ul>
         </li>
+        @else
+        @endif
       </ul>
     </nav>
     <!-- /.sidebar-menu -->

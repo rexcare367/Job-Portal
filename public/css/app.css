@@ -34377,3 +34377,7 @@ a.text-muted:hover {
   color: #ced4da;
 }
 
+.note-group-select-from-files {
+  display: none;
+}
+

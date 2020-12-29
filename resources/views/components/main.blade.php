@@ -1,11 +1,8 @@
 @include('partial.header')
 @include('partial.navbar')
 
-@if(auth()->user()->hasRole('superadmin') || auth()->user()->hasRole('admin'))
-  @include('partial.admin.sidebar')
-@else
-  @include('partial.user.sidebar')
-@endif
+@include('partial.sidebar')
+
 
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -31,4 +28,3 @@
 @stack('js')
 </body>
 </html>
-
