@@ -36,6 +36,7 @@ Route::group([
         }
     );
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+    Route::resource('/categories', 'CategoryController');
     Route::resource('/jobs', 'JobController');
 });
 
