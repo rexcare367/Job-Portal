@@ -37,4 +37,6 @@
 </head>
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
 
+@yield('jsconfig')
+
 <div class="wrapper">
