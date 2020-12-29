@@ -14,10 +14,39 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+  return view('welcome');
 });
 
 Auth::routes();
 
-Route::get('/user', 'UserController@index')->name('user');
-Route::get('/admin', 'AdminController@index')->name('admin');
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::group([
+    'as' => 'admin.',
+    'prefix' => 'admin',
+    'namespace' => 'Admin',
+    'middleware' => [
+        'auth', 'role:superadmin|admin'
+    ]
+], function () {
+  Route::get(
+      '/', function () {
+    return redirect()->route('admin.dashboard');
+  });
+  Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+});
+
+Route::group([
+    'as' => 'user.',
+    'prefix' => 'user',
+    'namespace' => 'User',
+    'middleware' => [
+        'auth', 'role:user'
+    ]
+], function () {
+  Route::get(
+      '/', function () {
+    return redirect()->route('user.dashboard');
+  });
+  Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+});
