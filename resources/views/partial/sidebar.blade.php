@@ -33,8 +33,8 @@
             </p>
           </a>
         </li>
-        <li class="nav-item">
-          <a href="{{ route('admin.jobs.index') }}" class="nav-link @if(request()->is('admin/jobs*')) active @endif">
+        <li class="nav-item  @if(request()->is('admin/jobs*') || request()->is('admin/categories*')) menu-open @endif">
+          <a href="{{ route('admin.jobs.index') }}" class="nav-link @if(request()->is('admin/jobs*') || request()->is('admin/categories*')) active @endif">
             <i class="nav-icon fas fa-briefcase"></i>
             <p>
               Jobs
@@ -42,6 +42,12 @@
             </p>
           </a>
           <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{{ route('admin.categories.index') }}" class="nav-link @if(request()->is('admin/categories*')) active @endif">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Job Category</p>
+              </a>
+            </li>
             <li class="nav-item">
               <a href="{{ route('admin.jobs.index') }}" class="nav-link @if(request()->is('admin/settings*')) active @endif">
                 <i class="far fa-circle nav-icon"></i>
