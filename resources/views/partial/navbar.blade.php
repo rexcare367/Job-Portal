@@ -48,8 +48,10 @@
         </li>
         <!-- Menu Footer-->
         <li class="user-footer">
-          <a href="#"
-             class="btn btn-default btn-flat">Profile</a>
+          @if(auth()->user()->hasRole('user'))
+            <a href="#"
+               class="btn btn-default btn-flat">Profile</a>
+          @endif
           <a href="#"
              onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
              class="btn btn-default btn-flat float-right">Sign out</a>
