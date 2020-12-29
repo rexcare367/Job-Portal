@@ -34381,3 +34381,7 @@ a.text-muted:hover {
   display: none;
 }
 
+label:not(.bold) {
+  font-weight: 400 !important;
+}
+
