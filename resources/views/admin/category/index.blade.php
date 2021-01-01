@@ -3,7 +3,7 @@
   <!-- Content Header (Page header) -->
   <div class="content-header">
     <div class="container-fluid">
-      <div class="row mb-2">
+      <div class="mb-2 row">
         <div class="col-sm-6">
           <h1 class="m-0">@yield('title')</h1>
         </div><!-- /.col -->
@@ -23,83 +23,10 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-lg-7">
-          <div class="card card-outline card-info">
-            <div class="card-body">
-              <table class="datatable table table-bordered table-striped text-sm">
-                <thead>
-                  <tr>
-                    <th width="10%">#</th>
-                    <th width="40%">Name</th>
-                    <th width="30%">Created</th>
-                    <th width="20%" class="text-center">Action
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  @foreach($categories as $category)
-                  <tr>
-                    <td>{{ $loop->index + 1 }}</td>
-                    <td>{{ $category->name }}</td>
-                    <td>{{ $category->created_at->diffForHumans() }}</td>
-                    <td class="text-center">
-                      <button type="button" data-id="{{ $category->id }}"
-                        class="open-modal btn btn-success btn-sm mr-1">
-                        <i class="fa fa-edit"></i>
-                      </button>
-                      @if (auth()->user()->hasRole('superadmin'))
-                      <button type="button" title="delete" data-id="{{ $category->id }}"
-                        class="delete-btn btn btn-sm btn-danger">
-                        <i class="fa fa-trash"></i>
-                      </button>
-                      @endif
-                    </td>
-                  </tr>
-                  @endforeach
-                </tbody>
-              </table>
-              <div class="pagination-container mt-2">
-                {{ $categories->links() }}
-              </div>
-            </div>
-          </div>
+          <category-table></category-table>
         </div>
         <div class="col-lg-5">
-          <form action="{{ route('admin.categories.store') }}" method="post">
-            @csrf
-            <div class="card card-outline card-primary">
-              <div class="card-header">
-                <h3 class="card-title"><i class="fas fa-edit"></i> Create new Category</h3>
-              </div>
-              <div class="card-body">
-                <div class="mb-3">
-                  <label for="name" class="col-form-label text-primary">Category Name</label>
-                  <input type="text" name="name" id="name" class="form-control @error('name') is-invalid @enderror"
-                    value="{{ old('name') }}" required autofocus />
-                  @error('name')
-                  <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                  </span>
-                  @enderror
-                </div>
-                {{-- /name field --}}
-                <div class="mb-3">
-                  <label for="description" class="col-form-label text-primary">Description</label>
-                  <textarea name="description" id="description"
-                    class="form-control @error('description') is-invalid @enderror">{{ old('description') }}</textarea>
-
-                  @error('description')
-                  <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                  </span>
-                  @enderror
-                </div>
-                {{-- /description field --}}
-                <div class="mb-1">
-                  <button title="Save" class="btn btn-success btn-sm btn-block"><i class="fa fa-save"></i></button>
-                </div>
-              </div>
-            </div>
-          </form>
+          <category-form></category-form>
         </div>
       </div>
     </div>
@@ -148,6 +75,7 @@
   <script>
     window.app = {
           url: {
+              paginate: '{{ route('admin.categories.paginate', '') }}',
               store: '{{ route('admin.categories.store', '') }}',
               show: '{{ route('admin.categories.show', '') }}',
               update: '{{ route('admin.categories.update', '') }}',

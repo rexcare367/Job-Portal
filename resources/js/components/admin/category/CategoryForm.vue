@@ -1,12 +1,25 @@
 <template>
-  <form @submit="handleSubmit">
+  <form @submit.prevent="handleSubmit">
     <div class="card card-outline card-primary">
       <div class="card-header">
         <h3 class="card-title"><i class="fas fa-edit"></i> Create new Category</h3>
+        <div class="card-tools">
+          <button type="button" class="btn btn-primary btn-sm float-right-sm" @click="enableCreateMode">
+            <i class="fa fa-plus"></i> Create New
+          </button>
+        </div>
       </div>
       <div class="card-body">
-        <div v-if="errorMessage || successMessage" class="alert alert-dismissable" :class="{'alert-danger': errorMessage, 'alert-success': successMessage}" role="alert">
+        <div
+          v-if="errorMessage || successMessage || !alertClosed"
+          class="alert alert-dismissable"
+          :class="{ 'alert-danger': errorMessage, 'alert-success': successMessage }"
+          role="alert"
+        >
           {{ errorMessage }} {{ successMessage }}
+          <button type="button" class="close" data-dismiss="alert" @click="this.alertClosed = true" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
         <div class="mb-3">
           <label for="name" class="col-form-label text-primary">Category Name</label>
@@ -49,9 +62,11 @@
     name: 'categoryForm',
     data() {
       return {
+        alertClosed: true,
         name: null,
         description: null,
-        mode: 'create',
+        id: null,
+        editMode: false,
         errors: {
           name: null,
           description: null,
@@ -61,7 +76,7 @@
       }
     },
     methods: {
-      handleSubmit(evt) {
+      handleSubmit() {
         if (this.name) {
           const data = {
             name: this.name,
@@ -69,13 +84,15 @@
             token: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
           }
 
-          if (this.mode == 'create') {
+          if (!this.editMode) {
             window.axios
               .post(routes.store, data)
               .then(resp => {
                 console.log(resp.data)
-                this.errorMessage = null;
-                this.successMessage = resp.data.message;
+                this.errorMessage = null
+                this.successMessage = resp.data.message
+                this.clearForm()
+                Fire.$emit('load_category')
               })
               .catch(err => {
                 if (err.response.status == 422) {
@@ -86,8 +103,36 @@
                     },
                   } = err.response
                   console.log(name[0])
-                  this.successMessage = null;
-                  this.errorMessage = message;
+                  this.successMessage = null
+                  this.errorMessage = message
+                  this.errors.name = name[0]
+                  this.name = ''
+                }
+                return
+              })
+          }
+
+          if (this.editMode) {
+            window.axios
+              .put(`${routes.update}/${this.id}`, data)
+              .then(resp => {
+                console.log(resp.data)
+                this.errorMessage = null
+                this.successMessage = resp.data.message
+                this.clearForm()
+                Fire.$emit('load_category')
+              })
+              .catch(err => {
+                if (err.response.status == 422) {
+                  let {
+                    data: {
+                      message,
+                      errors: { name },
+                    },
+                  } = err.response
+                  console.log(name[0])
+                  this.successMessage = null
+                  this.errorMessage = message
                   this.errors.name = name[0]
                   this.name = ''
                 }
@@ -101,9 +146,28 @@
         if (!this.name) {
           this.errors.name = 'Name field cannot be empty'
         }
-
-        evt.preventDefault()
       },
+      fillEditForm(item) {
+        this.editMode = true
+        this.id = item.id
+        this.name = item.name
+        this.description = item.description
+      },
+      clearForm() {
+        this.editMode = false
+        this.name = ''
+        this.description = ''
+        this.id = ''
+      },
+      enableCreateMode() {
+        this.clearForm()
+        this.errors.name = null
+      },
+    },
+    created() {
+      Fire.$on('fillForm', category => {
+        this.fillEditForm(category)
+      })
     },
     mounted() {},
   }

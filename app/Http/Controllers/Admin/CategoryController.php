@@ -37,7 +37,7 @@ class CategoryController extends Controller
     $category->description = $request->description;
     $category->save();
 
-    return redirect()->route('admin.categories.index')->with('success', 'Category created');
+    return response()->json(['success' =>true, 'message' => 'Category created']);
   }
 
   /**
@@ -49,6 +49,10 @@ class CategoryController extends Controller
   public function show(Category $category)
   {
     return response()->json($category);
+  }
+
+  public function paginate(Request $request) {
+    return $request->ajax() ? Category::latest()->paginate(10) : abort(404);
   }
 
   /**
@@ -69,7 +73,7 @@ class CategoryController extends Controller
     $category->description = $request->description;
     $category->save();
 
-    return redirect()->route('admin.categories.index')->with('success', 'Category updated');
+    return response()->json(['success' =>true, 'message' => 'Category updated']);
   }
 
   /**
@@ -80,7 +84,12 @@ class CategoryController extends Controller
    */
   public function destroy(Category $category)
   {
-    $category->delete();
-    return response()->json(['success' => 'Category deleted']);
+    if(auth()->user()->hasRole('superadmin')) {
+      $category->delete();
+      return response()->json(['message' => 'Category deleted', 'success' => true]);
+    }
+    else {
+      return response()->json(['success' => false, 'message' => 'You are not allowed to access this page'], 403);
+    }
   }
 }

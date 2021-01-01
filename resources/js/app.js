@@ -4,10 +4,10 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
+require('./bootstrap')
 // require('./customScrollbar');
 
-window.Vue = require('vue');
+window.Vue = require('vue')
 
 /**
  * The following block of code may be used to automatically register your
@@ -20,8 +20,14 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('category-table', require('./components/admin/category/CategoryTable.vue').default);
-Vue.component('category-form', require('./components/admin/category/CategoryForm.vue').default);
+//Pagination laravel-vue-pagination
+Vue.component('pagination', require('laravel-vue-pagination'))
+
+let Fire = new Vue()
+window.Fire = Fire
+
+Vue.component('category-table', require('./components/admin/category/CategoryTable.vue').default)
+Vue.component('category-form', require('./components/admin/category/CategoryForm.vue').default)
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -30,5 +36,5 @@ Vue.component('category-form', require('./components/admin/category/CategoryForm
  */
 
 const app = new Vue({
-    el: '#app',
-});
+  el: '#app',
+})

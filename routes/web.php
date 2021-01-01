@@ -36,6 +36,7 @@ Route::group([
         }
     );
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+    Route::get('/categories/paginate', 'CategoryController@paginate')->name('categories.paginate');
     Route::resource('/categories', 'CategoryController');
     Route::put('/jobs/toggle-status/{job}', 'JobController@toggleStatus')->name('jobs.toggle-status');
     Route::resource('/jobs', 'JobController');
