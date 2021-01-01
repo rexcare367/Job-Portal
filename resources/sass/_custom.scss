@@ -5,3 +5,9 @@
 label:not(.bold) {
     font-weight: 400 !important;
 }
+
+.quill-editor {
+  .ql-editor {
+    height: 100px;
+  }
+}

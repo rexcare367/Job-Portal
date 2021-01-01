@@ -2,22 +2,27 @@
 
 namespace Database\Seeders;
 
+use App\Models\Qualification;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     *
-     * @return void
-     */
-    public function run()
-    {
-        // \App\Models\User::factory(10)->create();
-        $this->call([
-            UserSeeder::class,
-            LaratrustSeeder::class,
-            RoleUserSeeder::class
-        ]);
-    }
+  /**
+   * Seed the application's database.
+   *
+   * @return void
+   */
+  public function run()
+  {
+    // \App\Models\User::factory(10)->create();
+    $this->call([
+        UserSeeder::class,
+        LaratrustSeeder::class,
+        RoleUserSeeder::class,
+        CategorySeeder::class,
+        StateCitySeeder::class,
+        QualificationSeeder::class,
+        SkillSeeder::class,
+    ]);
+  }
 }

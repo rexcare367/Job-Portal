@@ -37,7 +37,9 @@ Route::group([
     );
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
     Route::resource('/categories', 'CategoryController');
+    Route::put('/jobs/toggle-status/{job}', 'JobController@toggleStatus')->name('jobs.toggle-status');
     Route::resource('/jobs', 'JobController');
+    Route::get('/skills/search', 'SkillController@search')->name('skills.search');
 });
 
 Route::group([

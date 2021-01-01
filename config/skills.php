@@ -1,0 +1,32 @@
+<?php
+
+return [
+  ["name" => "C++"],
+  ["name" => "Python"],
+  ["name" => "Java"],
+  ["name" => "C#"],
+  ["name" => "PHP"],
+  ["name" => "MySQL"],
+  ["name" => "JavaScript"],
+  ["name" => "CSS"],
+  ["name" => "HTML"],
+  ["name" => "Accountant"],
+  ["name" => "Vue"],
+  ["name" => "ReactJS"],
+  ["name" => "jQuery"],
+  ["name" => "AJAX"],
+  ["name" => "JSON"],
+  ["name" => "Linux"],
+  ["name" => "AngularJS"],
+  ["name" => "Electron"],
+  ["name" => "Amber"],
+  ["name" => "Ruby"],
+  ["name" => "Django"],
+  ["name" => "Laravel"],
+  ["name" => "Code Igniter"],
+  ["name" => "Cake PHP"],
+  ["name" => "Wordpress"],
+  ["name" => "YII"],
+  ["name" => "Magento"],
+  ["name" => "Shopify"]
+];

@@ -1,16 +1,16 @@
-@include('partial.header')
-@include('partial.navbar')
+@include('partial._header')
+@include('partial._navbar')
 
-@include('partial.sidebar')
+@include('partial._sidebar')
 
 
 <!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
+<div id="app" class="content-wrapper">
   {{ $slot }}
 </div>
 <!-- /.content-wrapper -->
 
-@include('partial.footer')
+@include('partial._footer')
 
 <!-- REQUIRED SCRIPTS -->
 <!-- jQuery -->
@@ -19,11 +19,7 @@
 <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <!-- overlayScrollbars -->
 <script src="{{ asset('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
-
-<!-- PAGE PLUGINS -->
-<!-- AdminLTE for demo purposes -->
-{{--<script src="{{ asset('js/demo.js') }}"></script>--}}
-<script src="{{ asset('js/dashboard2.js') }}"></script>
+<script src="{{ asset('js/adminlte.min.js') }}"></script>
 
 @stack('js')
 </body>

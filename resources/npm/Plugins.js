@@ -156,7 +156,16 @@ const Plugins = [
   {
     from: 'node_modules/bs-custom-file-input/dist/',
     to: 'public/plugins/bs-custom-file-input'
-  }
+  },
+  // suggest tags
+  {
+    from: 'node_modules/suggestags/css/',
+    to: 'public/plugins/suggestags/css/'
+  },
+  {
+    from: 'node_modules/suggestags/js/',
+    to: 'public/plugins/suggestags/js/'
+  },
 ]
 
 module.exports = Plugins

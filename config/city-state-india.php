@@ -1,14 +1,5 @@
 <?php
-/**
- * Export to PHP Array plugin for PHPMyAdmin
- * @version 4.7.7
- */
 
-/**
- * Database `testdatabase`
- */
-
-/* `testdatabase`.`cities` */
 $cities = array(
  array('city_id' => '1', 'city_name' => 'Kolhapur', 'city_state' => 'Maharashtra'),
  array('city_id' => '2', 'city_name' => 'Port Blair', 'city_state' => 'Andaman & Nicobar Islands'),
