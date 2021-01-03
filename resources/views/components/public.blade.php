@@ -9,6 +9,8 @@
 
   <title> @yield('title', 'Welcome') | {{ config('app.name', 'Laravel') }}</title>
 
+  <script src="{{ asset('js/app.js') }}" defer></script>
+
   <!-- Fonts -->
   <link rel="dns-prefetch" href="//fonts.gstatic.com">
   <!-- Google Font: Source Sans Pro -->
@@ -26,13 +28,12 @@
 {{ $slot }}
 
   <!-- jQuery -->
-  <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+  <script type="application/javascript" src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
   <!-- Bootstrap 4 -->
-  <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+  <script type="application/javascript" src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
   <!-- AdminLTE App -->
-  <script src="{{ asset('js/app.js') }}"></script>
+  <script type="application/javascript" src="{{ asset('js/adminlte.min.js') }}" defer></script>
   @stack('js')
 </div>
 </body>
 </html>
-

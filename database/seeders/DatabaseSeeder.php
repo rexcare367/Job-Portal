@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Qualification;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -23,6 +22,7 @@ class DatabaseSeeder extends Seeder
         StateCitySeeder::class,
         QualificationSeeder::class,
         SkillSeeder::class,
+        ProfileSeeder::class,
     ]);
   }
 }

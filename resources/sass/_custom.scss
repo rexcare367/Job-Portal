@@ -6,8 +6,15 @@ label:not(.bold) {
     font-weight: 400 !important;
 }
 
-.quill-editor {
-  .ql-editor {
-    height: 100px;
-  }
+#quill-editor {
+  height: 350px;
+  font-size: 1rem;
+}
+
+.border-right-none {
+  border-right: none;
+}
+
+.border-left-none {
+  border-left: none;
 }

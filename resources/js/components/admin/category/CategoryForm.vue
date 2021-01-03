@@ -2,12 +2,8 @@
   <form @submit.prevent="handleSubmit">
     <div class="card card-outline card-primary">
       <div class="card-header">
-        <h3 class="card-title"><i class="fas fa-edit"></i> Create new Category</h3>
-        <div class="card-tools">
-          <button type="button" class="btn btn-primary btn-sm float-right-sm" @click="enableCreateMode">
-            <i class="fa fa-plus"></i> Create New
-          </button>
-        </div>
+        <h3 class="card-title"><i class="fas fa-edit"></i> {{ editMode ? 'Update' : 'Create' }} new Category</h3>
+        <div class="card-tools"></div>
       </div>
       <div class="card-body">
         <div
@@ -48,8 +44,13 @@
             <strong>{{ errors.description }}</strong>
           </span>
         </div>
-        <div class="mb-1">
-          <button title="Save" class="btn btn-success btn-sm btn-block"><i class="fa fa-save"></i></button>
+        <div class="mb-1 row">
+          <div class="d-flex justify-content-between align-items-center col-12">
+            <button title="Save" class="btn btn-success"><i class="fa fa-save"></i> {{ editMode ? "Update" : "Save" }}</button>
+            <button v-if="editMode" type="button" class="btn btn-danger" @click="enableCreateMode">
+              Cancel
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -92,7 +93,7 @@
                 this.errorMessage = null
                 this.successMessage = resp.data.message
                 this.clearForm()
-                Fire.$emit('load_category')
+                Event.$emit('load_category')
               })
               .catch(err => {
                 if (err.response.status == 422) {
@@ -120,7 +121,7 @@
                 this.errorMessage = null
                 this.successMessage = resp.data.message
                 this.clearForm()
-                Fire.$emit('load_category')
+                Event.$emit('load_category')
               })
               .catch(err => {
                 if (err.response.status == 422) {
@@ -165,7 +166,7 @@
       },
     },
     created() {
-      Fire.$on('fillForm', category => {
+      Event.$on('fillForm', category => {
         this.fillEditForm(category)
       })
     },

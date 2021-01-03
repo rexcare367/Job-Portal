@@ -1,7 +1,6 @@
 const mix = require('laravel-mix');
-
 /*
- |--------------------------------------------------------------------------
+|--------------------------------------------------------------------------
  | Mix Asset Management
  |--------------------------------------------------------------------------
  |
@@ -12,6 +11,7 @@ const mix = require('laravel-mix');
  */
 
 mix
-.js('resources/js/AdminLTE.js', 'public/js')
   .js('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css');
+  // .js('resources/js/AdminLTE.js', 'public/js')
+  .sass('resources/sass/app.scss', 'public/css')
+  .sass('resources/sass/landing.scss', 'public/css');

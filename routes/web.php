@@ -13,49 +13,56 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'FrontController@index')->name('welcome');
+Route::get('/search', 'FrontController@search')->name('search')->middleware(['auth', 'role:user']);
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group([
-    'as' => 'admin.',
-    'prefix' => 'admin',
-    'namespace' => 'Admin',
-    'middleware' => [
-        'auth', 'role:superadmin|admin'
-    ]
+  'as' => 'admin.',
+  'prefix' => 'admin',
+  'namespace' => 'Admin',
+  'middleware' => [
+    'auth', 'role:superadmin|admin'
+  ]
 ], function () {
-    Route::get(
-        '/',
-        function () {
-            return redirect()->route('admin.dashboard');
-        }
-    );
-    Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
-    Route::get('/categories/paginate', 'CategoryController@paginate')->name('categories.paginate');
-    Route::resource('/categories', 'CategoryController');
-    Route::put('/jobs/toggle-status/{job}', 'JobController@toggleStatus')->name('jobs.toggle-status');
-    Route::resource('/jobs', 'JobController');
-    Route::get('/skills/search', 'SkillController@search')->name('skills.search');
+  Route::get(
+    '/',
+    function () {
+      return redirect()->route('admin.dashboard');
+    }
+  );
+  Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+
+  Route::get('/categories/paginate', 'CategoryController@paginate')->name('categories.paginate');
+  Route::resource('/categories', 'CategoryController');
+
+  Route::get('/skills/paginate', 'SkillController@paginate')->name('skills.paginate');
+  Route::resource('/skills', 'SkillController');
+  Route::get('/skills/search', 'SkillController@search')->name('skills.search');
+
+  Route::put('/jobs/toggle-status/{job}', 'JobController@toggleStatus')->name('jobs.toggle-status');
+  Route::resource('/jobs', 'JobController');
 });
 
 Route::group([
-    'as' => 'user.',
-    'prefix' => 'user',
-    'namespace' => 'User',
-    'middleware' => [
-        'auth', 'role:user'
-    ]
+  'as' => 'user.',
+  'prefix' => 'user',
+  'namespace' => 'User',
+  'middleware' => [
+    'auth', 'role:user'
+  ]
 ], function () {
-    Route::get(
-        '/',
-        function () {
-            return redirect()->route('user.dashboard');
-        }
-    );
-    Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+  Route::get(
+    '/',
+    function () {
+      return redirect()->route('user.dashboard');
+    }
+  );
+  Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+  Route::get('/settings/profile/show-profile', 'ProfileController@showProfile')->name('profile.showProfile');
+  Route::put('/settings/profile/change-password', 'ProfileController@changePassword')->name('profile.changePassword');
+  Route::resource('/settings/profile', 'ProfileController');
 });

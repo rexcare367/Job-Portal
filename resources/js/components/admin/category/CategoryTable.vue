@@ -59,7 +59,7 @@
       },
       emitForm(category) {
         console.log(category)
-        Fire.$emit('fillForm', category)
+        Event.$emit('fillForm', category)
       },
       deleteRecord(id) {
         Swal.fire({
@@ -76,7 +76,7 @@
             window.axios.delete(`${routes.delete}/${id}`, {token})
               .then(resp => {
                 toastr.success(resp.data.message);
-                Fire.$emit('load_category');
+                Event.$emit('load_category');
               })
               .catch(err => {
                 console.error(err);
@@ -89,7 +89,7 @@
     computed: {},
     created() {
       this.fetchingAllCategory()
-      Fire.$on('load_category', () => {
+      Event.$on('load_category', () => {
         this.fetchingAllCategory()
       })
     },

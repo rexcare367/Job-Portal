@@ -10,7 +10,7 @@
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
-            <li class="breadcrumb-item active">Job Categories</li>
+            <li class="breadcrumb-item active">@yield('title')</li>
           </ol>
         </div><!-- /.col -->
       </div><!-- /.row -->
@@ -95,67 +95,6 @@
   @endpush
 
   @push('js')
-
-  <!-- Toastr -->
-  <script src="{{ asset('plugins/toastr/toastr.min.js') }}"></script>
-
-  <!-- SweetAlert2 -->
-  <script src="{{ asset('plugins/sweetalert2/sweetalert2.min.js') }}"></script>
-
-  <script>
-    $(function () {
-  $('.open-modal').on('click', async function () {
-      let id = $(this).data('id');
-      const resp = await fetch(`${app.url.show}/${id}`);
-      const data = await resp.json();
-      if (data) {
-          $('#editForm').attr('action', app.url.update + `/${id}`);
-          $('#editForm input[name="name"]').val(data.name);
-          $('#editForm textarea[name="description"]').val(data.description);
-          $('#editModal').modal({
-              'keyboard': false,
-              'backdrop': false
-          })
-      }
-  });
-
-  $('.delete-btn').on('click', function () {
-      let id = $(this).data('id');
-      let _token = '{{ csrf_token() }}';
-      Swal.fire({
-          title: 'Are you sure?',
-          text: "You won't be able to revert this!",
-          icon: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Yes, delete it!'
-      }).then((result) => {
-          if (result.isConfirmed) {
-              $.ajax({
-                  url: app.url.delete + `/${id}`,
-                  dataType: 'json',
-                  method: 'delete',
-                  data: {
-                    id,
-                    _token
-                  }
-              }).done(function (resp) {
-                  if (resp.success) {
-                      Swal.fire(
-                          'Deleted!',
-                          resp.success,
-                          'success'
-                      )
-                  }
-              }).fail(function (xhr, status, error) {
-                  alert(error);
-              });
-          }
-      })
-  })
-});
-  </script>
 
   @if(session('success'))
   <script>

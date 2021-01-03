@@ -48,6 +48,7 @@
                           @enderror
                         </div>
                       </div>
+
                       <div class="col-lg-4">
                         <label for="category" class="col-form-label text-secondary">Category*</label>
                         <select name="category" id="category"
@@ -64,6 +65,7 @@
                         </span>
                         @enderror
                       </div>
+
                       <div class="col-lg-4">
                         <label for="type" class="col-form-label text-secondary">Job Type*</label>
                         <select name="type" id="type" class="select2 form-control @error('type') is-invalid @enderror"
@@ -201,29 +203,34 @@
                         </span>
                         @enderror
                       </div>
+                      <div class="col-lg-12">
+                        <div class="mb-3">
+                          <label for="description" class="col-form-label text-secondary">Job Details*</label>
+                          <div id="quill-editor"></div>
+                          <textarea name="description" id="description"
+                            class="q-editor d-none form-control @error('description') is-invalid @enderror"
+                            required>{{ old('description', $job->description) }}</textarea>
+                          <input type="hidden" name="description_ql" id="qlDescription"
+                            value="{{ old('description_ql', $job->description_ql)}}" class="ql-input-hidden">
+                          @error('description')
+                          <span class="invalid-feedback">
+                            <strong>{{ $message }}</strong>
+                          </span>
+                          @enderror
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-                {{-- end card --}}
-              </div>
-              <!-- ./col-lg-12 -->
-
-              <div class="col-lg-12">
-                <div class="card card-outline card-warning collapsed-card">
-                  <div class="card-header">
-                    <h5 class="card-title">Additional Details (Optional)</h5>
-                    <div class="card-tools">
-                      <button class="btn btn-tool" type="button" data-card-widget="collapse">
-                        <i class="fas fa-plus"></i>
-                      </button>
+                    <div class="row mt-3">
+                      <div class="col-lg-12">
+                        <h5 class="text-secondary mb-2">Additional Details (Optional)</h5>
+                        <hr>
+                      </div>
                     </div>
-                  </div>
-                  <!-- ./card-header -->
-                  <div class="card-body">
                     <div class="row">
                       <div class="col-lg-3">
                         <div class="mb-3">
-                          <label for="year_passing_from">Year of Passing (From)</label>
+                          <label for="year_passing_from" class="col-form-label text-secondary">Year of Passing
+                            (From)</label>
                           <select name="year_passing_from" id="year_passing_from"
                             class="form-control select2 @error('year_passing_from') is-invalid @enderror">
                             <option></option>
@@ -240,7 +247,8 @@
 
                       <div class="col-lg-3">
                         <div class="mb-3">
-                          <label for="year_passing_to">Year of Passing (To)</label>
+                          <label for="year_passing_to" class="col-form-label text-secondary">Year of Passing
+                            (To)</label>
                           <select name="year_passing_to" id="year_passing_to"
                             class="form-control select2 @error('year_passing_to') is-invalid @enderror">
                             <option></option>
@@ -257,7 +265,7 @@
 
                       <div class="col-lg-3">
                         <div class="mb-3">
-                          <label for="experience_from">Experience (From)</label>
+                          <label for="experience_from" class="col-form-label text-secondary">Experience (From)</label>
                           <select name="experience_from" id="experience_from"
                             class="form-control select2 @error('experience_from') is-invalid @enderror">
                             <option></option>
@@ -274,7 +282,7 @@
 
                       <div class="col-lg-3">
                         <div class="mb-3">
-                          <label for="experience_to">Experience (To)</label>
+                          <label for="experience_to" class="col-form-label text-secondary">Experience (To)</label>
                           <select name="experience_to" id="experience_to"
                             class="form-control select2 @error('experience_to') is-invalid @enderror">
                             <option></option>
@@ -291,11 +299,17 @@
 
                       <div class="col-lg-6">
                         <div class="mb-3">
-                          <label for="skills">Skills</label>
-                          <input type="text" name="skills" id="skills"
-                            class="form-control @error('experience_to') is-invalid @enderror" value="{{ implode(',', $skill_ids) }}">
+                          <label for="skills" class="col-form-label text-secondary">Skills</label>
+                          <select name="skills[]" id="skills"
+                            class="multiple form-control @error('skills') is-invalid @enderror" multiple>
+                            <option></option>
+                            @foreach ($skills as $skill)
+                            <option {{ in_array($skill->id, $skill_ids) ? "selected" : "" }} value="{{ $skill->id }}">
+                              {{ $skill->name }}</option>
+                            @endforeach
+                          </select>
 
-                          @error('experience_to')
+                          @error('skills')
                           <span class="invalid-feedback">
                             <strong>{{ $message }}</strong>
                           </span>
@@ -305,7 +319,7 @@
 
                       <div class="col-lg-6">
                         <div class="mb-3">
-                          <label for="gender">Gender</label>
+                          <label for="gender" class="col-form-label text-secondary">Gender</label>
                           <select name="gender" id="gender" class="form-control select2">
                             <option></option>
                             <option {{ old('gender', $job->gender) == APP\Models\Job::MALE ? "selected" : "" }}
@@ -318,41 +332,17 @@
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <!-- ./card-body -->
-                </div>
-                <!-- ./card -->
-              </div>
-              <!-- ./col-lg-12 -->
-
-              <div class="col-lg-12">
-                <div class="card card-outline card-primary">
-                  <div class="card-header">
-                    <h5 class="card-title" for="description">Job Description</h5>
-                    <div class="card-tools">
-                      <button class="btn btn-tool" type="button" data-card-widget="collapse">
-                        <i class="fas fa-minus"></i>
-                      </button>
-                    </div>
-                  </div>
-                  <div class="card-body">
-                    <div class="mb-3">
-                      <label for="description" class="col-form-label text-secondary">Job Description*</label>
-                      <textarea name="description" id="description"
-                        class="form-control @error('description') is-invalid @enderror"
-                        required>{!! old('description', $job->description) !!}</textarea>
-                      @error('description')
-                      <span class="invalid-feedback">
-                        <strong>{{ $message }}</strong>
-                      </span>
-                      @enderror
-                    </div>
+                    {{-- ./row --}}
 
                     <div class="row mt-3">
-                      <button type="submit" class="btn btn-success btn-block">Save</button>
+                      <div class="col-lg-12 text-right">
+                        <button type="submit" class="btn btn-success">Save</button>
+                      </div>
                     </div>
+                    {{-- ./row --}}
                   </div>
                 </div>
+                {{-- end card --}}
               </div>
               <!-- ./col-lg-12 -->
             </div>
@@ -376,15 +366,11 @@
   {{-- CSS --}}
   @push('css')
   <!-- Summernote CSS -->
-  <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/codemirror.css">
-  <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/theme/monokai.css">
-  <link rel="stylesheet" href="{{ asset('plugins/summernote/summernote-bs4.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('plugins/quill/quill.snow.css') }}">
 
   <!-- Select2 CSS -->
   <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.min.css') }}">
   <link rel="stylesheet" href="{{ asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
-  <!-- Suggestags CSS-->
-  <link rel="stylesheet" href="{{ asset('plugins/suggestags/css/amsify.suggestags.css') }}">
   @endpush
 
   {{-- JS --}}
@@ -392,58 +378,10 @@
   <!-- Moment -->
   <script src="{{ asset('plugins/moment/moment.min.js') }}"></script>
 
-  <!-- Summernote -->
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/codemirror.js"></script>
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/mode/xml/xml.js"></script>
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/codemirror/2.36.0/formatting.js"></script>
-  <script src="{{ asset('plugins/summernote/summernote-bs4.min.js') }}"></script>
-
   <!-- Select2 -->
   <script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
 
-  <!-- Suggestags -->
-  <script src="{{ asset('plugins/suggestags/js/jquery.amsify.suggestags.js') }}"></script>
-
   <!-- Tempusdominus Bootstrap 4 -->
   <script src="{{ asset('plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}"></script>
-  <script>
-    // Summernote Cofniguration
-    $(function () {
-      $('#description').summernote({
-        height: 150,
-        placeholder: 'Write some description...',
-        codemirror: { // codemirror options
-          theme: 'monokai'
-        }
-      });
-
-      //Initialize Select2 Elements
-      $('.select2').select2({
-        theme: 'bootstrap4',
-        placeholder: "--Select--"
-      });
-
-      // Suggest Tag Configuration
-      $('input[name="skills"]').amsifySuggestags({
-        printValues: false,
-        suggestionsAction : {
-          timeout: -1,
-          minChars: 2,
-          minChange: -1,
-          delay: 100,
-          type: 'GET',
-          url: app.url.searchSkill,
-          beforeSend : function() {
-          },
-          success: function(data) {
-          },
-          error: function() {
-          },
-          complete: function(data) {
-          }
-        }
-      });
-    });
-  </script>
   @endpush
 </x-main>

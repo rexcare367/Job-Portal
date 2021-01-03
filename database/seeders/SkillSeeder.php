@@ -24,12 +24,14 @@ class SkillSeeder extends Seeder
       }
 
       $name = $skill['name'];
+      $description = $skill['description'];
       $created_at = Carbon::now()->toDateTimeString();
       $updated_at = Carbon::now()->toDateTimeString();
       $skillobj = Skill::where('name', $name)->first();
       if (empty($skillobj)) {
         Skill::create([
           'name' => $name,
+          'description' => $description,
           'created_at' => $created_at,
           'updated_at' => $updated_at
         ]);

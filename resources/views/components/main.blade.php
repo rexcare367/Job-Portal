@@ -14,12 +14,12 @@
 
 <!-- REQUIRED SCRIPTS -->
 <!-- jQuery -->
-<script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+<script type="application/javascript" src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
 <!-- Bootstrap -->
-<script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script type="application/javascript" src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <!-- overlayScrollbars -->
-<script src="{{ asset('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
-<script src="{{ asset('js/adminlte.min.js') }}"></script>
+<script type="application/javascript" src="{{ asset('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
+<script type="application/javascript" src="{{ asset('js/adminlte.min.js') }}"></script>
 
 @stack('js')
 </body>

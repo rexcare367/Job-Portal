@@ -7,11 +7,15 @@ window._ = require('lodash');
  */
 
 try {
-    window.Popper = require('popper.js').default;
-    window.$ = window.jQuery = require('jquery');
+  window.Popper = require('popper.js/dist/popper').default;
+  window.$ = window.jQuery = require('jquery');
 
-    require('bootstrap');
-} catch (e) {}
+  require('bootstrap');
+
+  require('../jobs');
+} catch (e) {
+  console.log(e);
+}
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
@@ -40,4 +44,8 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     forceTLS: true
 // });
 
-require('./pages/jobs');
+/**
+ * First we will load all of this project's JavaScript dependencies which
+ * includes Vue and other libraries. It is a great starting point when
+ * building robust, powerful web applications using Vue and Laravel.
+ */

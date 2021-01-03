@@ -3,7 +3,7 @@
 if (!function_exists('renderYearOptions')) {
   function renderYearOptions($old = "")
   {
-    $year = date('Y') + 3;
+    $year = date('Y') + 1;
     $a = 0;
     while ($a < 9) {
       $year--;

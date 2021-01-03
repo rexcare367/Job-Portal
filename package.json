@@ -45,10 +45,12 @@
         "sweetalert2": "^10.10.2",
         "tempusdominus-bootstrap-4": "^5.39.0",
         "toastr": "^2.1.4",
-        "vue": "^2.5.17"
+        "vue": "^2.5.17",
+        "vue-select2": "^0.2.6"
     },
     "devDependencies": {
         "eslint": "^7.16.0",
+        "eslint-plugin-vue": "^7.4.0",
         "laravel-mix": "^5.0.1",
         "lodash": "^4.17.19",
         "resolve-url-loader": "^2.3.1",

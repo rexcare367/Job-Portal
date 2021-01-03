@@ -37,8 +37,9 @@ class JobController extends Controller
     $qualifications = Qualification::all(['id', 'name']);
 
     $categories = Category::all(['id', 'name']);
+    $skills = Skill::all(['id', 'name']);
 
-    return view('admin.jobs.create', compact('categories', 'locations', 'qualifications'));
+    return view('admin.jobs.create', compact('categories', 'locations', 'qualifications', 'skills'));
   }
 
   /**
@@ -52,7 +53,7 @@ class JobController extends Controller
     // return $request;
 
     $request->validate([
-      'title' => 'required|string|between:10, 255',
+      'title' => 'required|string|between:5, 255',
       'category' => 'required|integer',
       'type' => 'required|integer',
       'location' => 'required|integer',
@@ -65,9 +66,10 @@ class JobController extends Controller
       'year_passing_to' => 'nullable|integer',
       'experience_from' => 'nullable|integer',
       'experience_to' => 'nullable|integer',
-      'skills' => 'nullable|string',
+      'skills' => 'nullable|array',
       'gender' => 'nullable|integer',
-      'description' => 'required|string|between:100, 5000'
+      'description' => 'required|string|between:100, 5000',
+      'description_ql' => 'required|string'
     ]);
 
     $newJob = new Job();
@@ -77,6 +79,7 @@ class JobController extends Controller
     $newJob->type = $request->type;
     $newJob->city_id = $request->location;
     $newJob->description = $request->description;
+    $newJob->description_ql = $request->description_ql;
     $newJob->deadline = $request->deadline ?? null;
     $newJob->hiring = json_encode($request->hiring);
     $newJob->monthly_salary_min = $request->monthly_salary_min;
@@ -101,7 +104,7 @@ class JobController extends Controller
     $newJob->save();
 
     if(!empty($request->skills)) {
-      $skills = explode(',',$request->skills);
+      $skills = $request->skills;
       $newskill = [];
       foreach ($skills as $skill) {
         $skillobj = Skill::where('id', '=', $skill)->first();
@@ -152,7 +155,9 @@ class JobController extends Controller
 
     $categories = Category::all(['id', 'name']);
 
-    return view('admin.jobs.edit', compact('job', 'qualification_ids', 'skill_ids', 'categories', 'locations', 'qualifications'));
+    $skills = Skill::all(['id', 'name']);
+
+    return view('admin.jobs.edit', compact('job', 'skills', 'qualification_ids', 'skill_ids', 'categories', 'locations', 'qualifications'));
   }
 
   /**
@@ -166,16 +171,23 @@ class JobController extends Controller
   {
     // return $request;
     $request->validate([
-      'title' => 'required|string|between:10, 255',
+      'title' => 'required|string|between:5, 255',
       'category' => 'required|integer',
       'type' => 'required|integer',
       'location' => 'required|integer',
-      'description' => 'required|string|between:100, 5000',
-      'deadline' => 'nullable|date',
+      'qualification' => 'required|array',
       'hiring' => 'required|array',
+      'deadline' => 'nullable|date',
       'monthly_salary_min' => 'required|integer',
       'monthly_salary_max' => 'required|integer',
-      'qualification' => 'required|array'
+      'year_passing_from' => 'nullable|integer',
+      'year_passing_to' => 'nullable|integer',
+      'experience_from' => 'nullable|integer',
+      'experience_to' => 'nullable|integer',
+      'skills' => 'nullable|array',
+      'gender' => 'nullable|integer',
+      'description' => 'required|string|between:100, 5000',
+      'description_ql' => 'required|string'
     ]);
 
     $job->title = $request->title;
@@ -184,6 +196,7 @@ class JobController extends Controller
     $job->type = $request->type;
     $job->city_id = $request->location;
     $job->description = $request->description;
+    $job->description_ql = $request->description_ql;
     $job->deadline = $request->deadline ?? null;
     $job->hiring = json_encode($request->hiring);
     $job->monthly_salary_min = $request->monthly_salary_min;
@@ -208,7 +221,7 @@ class JobController extends Controller
     $job->save();
 
     if(!empty($request->skills)) {
-      $skills = explode(',',$request->skills);
+      $skills = $request->skills;
       $newskill = [];
       foreach ($skills as $skill) {
         $skillobj = Skill::where('id', '=', $skill)->first();
