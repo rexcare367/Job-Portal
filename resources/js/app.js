@@ -1,4 +1,8 @@
 require('./vendor/bootstrap');
+const Turbolinks = require('turbolinks');
+Turbolinks.start();
+
+// vue
 window.Vue = require('vue');
 
 /**
@@ -28,6 +32,9 @@ Vue.component('multi-select2', require('./components/MultiSelect2.vue').default)
 
 // User
 Vue.component('profile-display', require('./components/user/profile/ProfileDisplay').default);
+Vue.component('title-skill-search', require('./components/user/search/TitleSkillSearch.vue').default);
+Vue.component('job-city-search', require('./components/user/search/JobLocationSearch.vue').default);
+Vue.component('job-apply-button', require('./components/user/job/ApplyButton.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -35,6 +42,25 @@ Vue.component('profile-display', require('./components/user/profile/ProfileDispl
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-const app = new Vue({
-  el: '#app',
+document.addEventListener('turbolinks:load', () => {
+  const app = new Vue({
+    el: '#app',
+    beforeMount() {
+      if (this.parentNode) {
+        document.addEventListener('turbolinks:visit', () => this.$destroy(), { once: true });
+
+        this.$originalEl = this.$el.outerHTML;
+      }
+    },
+    destroyed() {
+      this.$el.outerHTML = this.$originalEl;
+    },
+  });
 });
+
+document.addEventListener('turbolinks:load', function(event) {
+  document.querySelectorAll('a[href^="#"]').forEach(function(el) {
+    el.setAttribute('data-turbolinks', false);
+  });
+});
+

@@ -114,7 +114,7 @@ class ProfileController extends Controller
         Storage::disk('public')->delete('cv/' . $profile->cv);
       }
 
-      $filepath = $image->storeAs('cv', $cvName, 'public');
+      $filepath = $cv->storeAs('cv', $cvName, 'public');
       // Storage::disk('public')->put('cv/' . $cvName, $cv);
     } else {
       $cvName = $profile->cv;

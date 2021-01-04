@@ -3,7 +3,7 @@
   <!-- Content Header (Page header) -->
   <div class="content-header">
     <div class="container-fluid">
-      <div class="row mb-2">
+      <div class="mb-2 row">
         <div class="col-sm-6">
           <h1 class="m-0">@yield('title')</h1>
         </div><!-- /.col -->
@@ -219,10 +219,22 @@
                           @enderror
                         </div>
                       </div>
-                    </div>
-                    <div class="row mt-3">
                       <div class="col-lg-12">
-                        <h5 class="text-secondary mb-2">Additional Details (Optional)</h5>
+                        <div class="mb-3">
+                          <label for="company_name">Company Name</label>
+                          <input id="company_name" class="form-control  @error('company_name') is-invalid @enderror" type="text" name="company_name" value="{{ old('company_name', $job->company_name) }}" />
+
+                          @error('company_name')
+                            <span class="invalid-feedback">
+                              <strong>{{ $message }}</strong>
+                            </span>
+                          @enderror
+                        </div>
+                      </div>
+                    </div>
+                    <div class="mt-3 row">
+                      <div class="col-lg-12">
+                        <h5 class="mb-2 text-secondary">Additional Details (Optional)</h5>
                         <hr>
                       </div>
                     </div>
@@ -334,8 +346,8 @@
                     </div>
                     {{-- ./row --}}
 
-                    <div class="row mt-3">
-                      <div class="col-lg-12 text-right">
+                    <div class="mt-3 row">
+                      <div class="text-right col-lg-12">
                         <button type="submit" class="btn btn-success">Save</button>
                       </div>
                     </div>

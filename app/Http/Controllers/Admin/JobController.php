@@ -9,6 +9,7 @@ use App\Models\Qualification;
 use App\Models\State;
 use App\Models\Skill;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class JobController extends Controller
 {
@@ -50,11 +51,12 @@ class JobController extends Controller
    */
   public function store(Request $request)
   {
-    // return $request;
+    //return $request;
 
     $request->validate([
       'title' => 'required|string|between:5, 255',
       'category' => 'required|integer',
+      'company_name' => 'required|string',
       'type' => 'required|integer',
       'location' => 'required|integer',
       'qualification' => 'required|array',
@@ -74,6 +76,8 @@ class JobController extends Controller
 
     $newJob = new Job();
     $newJob->title = $request->title;
+    $newJob->company_name = $request->company_name;
+    $newJob->slug = Str::slug($request->title . '__' . $request->company_name);
     $newJob->category_id = $request->category;
     $newJob->user_id = auth()->id();
     $newJob->type = $request->type;
@@ -85,30 +89,30 @@ class JobController extends Controller
     $newJob->monthly_salary_min = $request->monthly_salary_min;
     $newJob->monthly_salary_max = $request->monthly_salary_max;
 
-    if(!empty($request->year_passing_from)) {
+    if (!empty($request->year_passing_from)) {
       $newJob->year_passing_from = $request->year_passing_from;
     }
-    if(!empty($request->year_passing_to)) {
+    if (!empty($request->year_passing_to)) {
       $newJob->year_passing_to = $request->year_passing_to;
     }
-    if(!empty($request->experience_from)) {
+    if (!empty($request->experience_from)) {
       $newJob->experience_from = $request->experience_from;
     }
-    if(!empty($request->experience_to)) {
+    if (!empty($request->experience_to)) {
       $newJob->experience_to = $request->experience_to;
     }
-    if(!empty($request->gender)) {
+    if (!empty($request->gender)) {
       $newJob->gender = $request->gender;
     }
 
     $newJob->save();
 
-    if(!empty($request->skills)) {
+    if (!empty($request->skills)) {
       $skills = $request->skills;
       $newskill = [];
       foreach ($skills as $skill) {
         $skillobj = Skill::where('id', '=', $skill)->first();
-        if(empty($skillobj)) {
+        if (empty($skillobj)) {
           $updated_skill = Skill::create([
             'name' => $skill
           ]);
@@ -173,6 +177,7 @@ class JobController extends Controller
     $request->validate([
       'title' => 'required|string|between:5, 255',
       'category' => 'required|integer',
+      'company_name' => 'required|string',
       'type' => 'required|integer',
       'location' => 'required|integer',
       'qualification' => 'required|array',
@@ -191,6 +196,8 @@ class JobController extends Controller
     ]);
 
     $job->title = $request->title;
+    $job->company_name = $request->company_name;
+    $job->slug = Str::slug($request->title . '__' . $request->company_name);
     $job->category_id = $request->category;
     $job->user_id = auth()->id();
     $job->type = $request->type;
@@ -202,30 +209,30 @@ class JobController extends Controller
     $job->monthly_salary_min = $request->monthly_salary_min;
     $job->monthly_salary_max = $request->monthly_salary_max;
 
-    if(!empty($request->year_passing_from)) {
+    if (!empty($request->year_passing_from)) {
       $job->year_passing_from = $request->year_passing_from;
     }
-    if(!empty($request->year_passing_to)) {
+    if (!empty($request->year_passing_to)) {
       $job->year_passing_to = $request->year_passing_to;
     }
-    if(!empty($request->experience_from)) {
+    if (!empty($request->experience_from)) {
       $job->experience_from = $request->experience_from;
     }
-    if(!empty($request->experience_to)) {
+    if (!empty($request->experience_to)) {
       $job->experience_to = $request->experience_to;
     }
-    if(!empty($request->gender)) {
+    if (!empty($request->gender)) {
       $job->gender = $request->gender;
     }
 
     $job->save();
 
-    if(!empty($request->skills)) {
+    if (!empty($request->skills)) {
       $skills = $request->skills;
       $newskill = [];
       foreach ($skills as $skill) {
         $skillobj = Skill::where('id', '=', $skill)->first();
-        if(empty($skillobj)) {
+        if (empty($skillobj)) {
           $updated_skill = Skill::create([
             'name' => $skill
           ]);

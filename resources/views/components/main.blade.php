@@ -19,7 +19,6 @@
 <script type="application/javascript" src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <!-- overlayScrollbars -->
 <script type="application/javascript" src="{{ asset('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
-<script type="application/javascript" src="{{ asset('js/adminlte.min.js') }}"></script>
 
 @stack('js')
 </body>
