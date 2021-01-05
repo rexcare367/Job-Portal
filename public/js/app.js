@@ -3198,6 +3198,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 var toastr = __webpack_require__(/*! toastr */ "./node_modules/toastr/toastr.js");
@@ -3224,6 +3240,7 @@ var experiences = window.app.experiences;
       jobrole: '',
       phone: '',
       education: '',
+      imgStr: '',
       newImage: '',
       newCV: '',
       experiences: experiences,
@@ -3252,7 +3269,9 @@ var experiences = window.app.experiences;
         location: null,
         skill: null,
         jobType: null,
-        about: null
+        about: null,
+        cv: null,
+        image: null
       }
     };
   },
@@ -3274,37 +3293,43 @@ var experiences = window.app.experiences;
       this.name = user.name;
     },
     setProfileData: function setProfileData(profile) {
-      var skill = parse(profile.skills).map(function (el) {
-        return parseInt(el);
-      });
-      this.selectedSkills = skill;
-      this.skillNames = this.skills.filter(function (el) {
-        return skill.includes(el.id);
-      }).map(function (el) {
-        return el.text;
-      }).join(', ');
-      var location = parse(profile.location).map(function (el) {
-        return parseInt(el);
-      });
-      this.selectedLocations = location;
-      this.locationNames = this.locations.filter(function (el) {
-        return location.includes(el.id);
-      }).map(function (el) {
-        return el.text;
-      }).join(', ');
-      var jobType = parse(profile.job_type);
-      this.selectedJobType = jobType;
-      this.jobTypeName = this.jobTypes.find(function (el) {
-        return el.id == jobType;
-      }).text;
+      this.imgStr = profile.image == 'avatar.jpg' ? '/img/avatar.jpg' : '/storage/avatar/' + profile.image;
+      this.jobrole = profile.jobrole;
+      this.phone = profile.phone;
       this.education = profile.education;
       var exp = parseInt(profile.experience);
       this.selectedExperience = exp;
       this.experienceLabel = this.experiences.find(function (el) {
         return el.id == exp;
       }).text;
-      this.jobrole = profile.jobrole;
-      this.phone = profile.phone;
+
+      try {
+        var skill = parse(profile.skills).map(function (el) {
+          return parseInt(el);
+        });
+        this.selectedSkills = skill;
+        this.skillNames = this.skills.filter(function (el) {
+          return skill.includes(el.id);
+        }).map(function (el) {
+          return el.text;
+        }).join(', ');
+        var location = parse(profile.location).map(function (el) {
+          return parseInt(el);
+        });
+        this.selectedLocations = location;
+        this.locationNames = this.locations.filter(function (el) {
+          return location.includes(el.id);
+        }).map(function (el) {
+          return el.text;
+        }).join(', ');
+        var jobType = parse(profile.job_type);
+        this.selectedJobType = jobType;
+        this.jobTypeName = this.jobTypes.find(function (el) {
+          return el.id == jobType;
+        }).text;
+      } catch (error) {
+        console.log(error);
+      }
     },
     handleCVUpload: function handleCVUpload() {
       this.newCV = this.$refs.cv.files[0];
@@ -3340,8 +3365,16 @@ var experiences = window.app.experiences;
 
         _this2.clearForm();
       })["catch"](function (err) {
-        console.log(err.reponse.data);
-        toastr.error(err.response.data.message);
+        if (typeof err.response.data.errors.image != 'undefined') {
+          _this2.errors.image = err.response.data.errors.image[0];
+        }
+
+        if (typeof err.response.data.errors.cv != 'undefined') {
+          _this2.errors.cv = err.response.data.errors.cv[0];
+        }
+
+        toastr.error(err.response.data.errors, err.response.data.message);
+        console.log(err.response.data);
       });
     },
     handlePasswordForm: function handlePasswordForm() {
@@ -3386,7 +3419,16 @@ var experiences = window.app.experiences;
     },
     clearErrors: function clearErrors() {
       this.errors = {
-        password: ''
+        password: null,
+        name: null,
+        jobrole: null,
+        education: null,
+        location: null,
+        skill: null,
+        jobType: null,
+        about: null,
+        cv: null,
+        img: null
       };
     },
     showProfileTab: function showProfileTab() {
@@ -10299,7 +10341,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\ntextarea {\n  font-size: 1.1rem !important;\n}\n", ""]);
+exports.push([module.i, "\ntextarea {\n  font-size: 1.1rem !important;\n}\n.invalid-msg {\n  color: red;\n  background-color: mistyrose;\n  border: 1px solid rosybrown;\n  border-radius: 5px;\n  padding: 0.5rem 1rem;\n  margin-top: 0.5rem;\n}\n", ""]);
 
 // exports
 
@@ -115361,7 +115403,12 @@ var render = function() {
           _c("div", { staticClass: "text-center" }, [
             _c("img", {
               staticClass: "profile-user-img img-fluid img-circle",
-              attrs: { src: _vm.setImage, alt: "User profile picture" }
+              attrs: {
+                src: _vm.imgStr,
+                alt: "User profile picture",
+                width: "100",
+                height: "100"
+              }
             })
           ]),
           _vm._v(" "),
@@ -115609,7 +115656,10 @@ var render = function() {
                           _c("div", { staticClass: "custom-file" }, [
                             _c("input", {
                               ref: "image",
-                              staticClass: "custom-file-input",
+                              class: {
+                                "is-invalid": _vm.errors.image,
+                                "custom-file-input": true
+                              },
                               attrs: {
                                 type: "file",
                                 name: "image",
@@ -115634,7 +115684,21 @@ var render = function() {
                           ]),
                           _vm._v(" "),
                           _vm._m(5)
-                        ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "text-secondary help-text" }, [
+                          _vm._v("The File should be 1 MB or lower.")
+                        ]),
+                        _vm._v(" "),
+                        _vm.errors.image
+                          ? _c("div", { staticClass: "invalid-msg" }, [
+                              _vm._v(
+                                "\n                    " +
+                                  _vm._s(_vm.errors.image) +
+                                  "\n                  "
+                              )
+                            ])
+                          : _vm._e()
                       ])
                     ]),
                     _vm._v(" "),
@@ -115786,7 +115850,8 @@ var render = function() {
                               class: ["select2 form-control"],
                               attrs: {
                                 options: _vm.jobTypes,
-                                "data-placeholder": "Select Any Job Types"
+                                "data-placeholder": "Select Any Job Types",
+                                required: ""
                               },
                               model: {
                                 value: _vm.selectedJobType,
@@ -115904,6 +115969,7 @@ var render = function() {
                             _c("input", {
                               ref: "cv",
                               staticClass: "custom-file-input",
+                              class: { "is-invalid": _vm.errors.cv },
                               attrs: {
                                 type: "file",
                                 name: "cv",
@@ -115928,6 +115994,20 @@ var render = function() {
                           ]),
                           _vm._v(" "),
                           _vm._m(6)
+                        ]),
+                        _vm._v(" "),
+                        _vm.errors.cv
+                          ? _c("div", { staticClass: "invalid-msg" }, [
+                              _vm._v(
+                                "\n                    " +
+                                  _vm._s(_vm.errors.cv) +
+                                  "\n                  "
+                              )
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "text-secondary help-text" }, [
+                          _vm._v("The File should be 1 MB or lower.")
                         ])
                       ])
                     ]),

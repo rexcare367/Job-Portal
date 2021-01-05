@@ -3,8 +3,7 @@
   <script>
     window.app = {
       url: {
-        titleSkillSearch: "{{ route('jobskill.search')}}",
-        jobCitySearch: "{{ route('jobcity.search')}}",
+        ajaxSearch: "{{ route('ajax.job.search') }}",
         search: "{{ route('search')}}",
       }
     }

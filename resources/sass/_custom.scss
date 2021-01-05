@@ -3,7 +3,7 @@
 }
 
 label:not(.bold) {
-    font-weight: 400 !important;
+  font-weight: 400 !important;
 }
 
 #quill-editor {
@@ -17,4 +17,14 @@ label:not(.bold) {
 
 .border-left-none {
   border-left: none;
+}
+
+.job-applications {
+  .user {
+    padding: 1rem;
+    border-bottom: 1px solid #bbb;
+    &:last-child {
+      border-bottom: none;
+    }
+  }
 }

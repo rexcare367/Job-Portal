@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -55,6 +56,8 @@ Route::group([
 
   Route::put('/jobs/toggle-status/{job}', 'JobController@toggleStatus')->name('jobs.toggle-status');
   Route::resource('/jobs', 'JobController');
+  Route::get('/admin/users/show/{user}', 'UserController@show')
+    ->name('user.show');
 });
 
 Route::group([

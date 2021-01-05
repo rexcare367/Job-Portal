@@ -42,7 +42,7 @@ class ProfileController extends Controller
    */
   public function create()
   {
-    //
+    abort(404);
   }
 
   /**
@@ -57,8 +57,9 @@ class ProfileController extends Controller
     $this->validate($request, [
       'name' => 'required|string',
       'about' => 'nullable|string',
-      'cv' => 'nullable|file',
-      'image' => 'nullable|file',
+      'cv' => ['nullable', 'file', 'mimes:jpeg,pdf,docx,doc,jpg', 'max:1024'], // 1MB
+      //'image' => 'nullable|file|mimes:|max:1024', // 1MB
+      'image' => ['nullable', 'file', 'mimes:jpeg,jpg,png,gif,bmp', 'max:1024'], // 1MB
       'job_type' => 'nullable|integer',
       'jobrole' => 'nullable|string',
       'phone' => 'nullable|string',
@@ -72,9 +73,9 @@ class ProfileController extends Controller
     $profile = $user->profile;
 
     $image = $request->file('image');
-    $allowed_extensions = ['jpeg', 'jpg', 'png', 'gif'];
+    // $allowed_extensions = ['jpeg', 'jpg', 'png', 'gif'];
 
-    if ($image && in_array($image->getClientOriginalExtension(), $allowed_extensions)) {
+    if ($image) {
       // make the unique name for the image
       $currentDate = Carbon::now()->toDateString();
       $imageName = $currentDate . '-' . uniqid() . '.' . $image->getClientOriginalExtension();
@@ -98,9 +99,9 @@ class ProfileController extends Controller
 
 
     $cv = $request->file('cv');
-    $allowed_extensions = ['doc', 'docx', 'pdf', 'jpg', 'jpeg'];
+    // $allowed_extensions = ['doc', 'docx', 'pdf', 'jpg', 'jpeg'];
 
-    if ($cv && in_array($cv->getClientOriginalExtension(), $allowed_extensions)) {
+    if ($cv) {
       // make the unique name for the image
       $currentDate = Carbon::now()->toDateString();
       $cvName = $currentDate . '-' . uniqid() . '.' . $cv->getClientOriginalExtension();

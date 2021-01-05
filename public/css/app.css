@@ -34398,3 +34398,12 @@ label:not(.bold) {
   border-left: none;
 }
 
+.job-applications .user {
+  padding: 1rem;
+  border-bottom: 1px solid #bbb;
+}
+
+.job-applications .user:last-child {
+  border-bottom: none;
+}
+

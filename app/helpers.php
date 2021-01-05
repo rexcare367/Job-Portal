@@ -186,3 +186,16 @@ if (!function_exists('applicationHasUser')) {
     }
   }
 }
+
+if (!function_exists('renderSkillNames')) {
+  function renderNames($collections, $id_array, $search, $seek)
+  {
+    $new_arr = [];
+    foreach ($collections as $collection) {
+      if (in_array($collection->$search, $id_array)) {
+        $new_arr[] = $collection->$seek;
+      }
+    }
+    return $new_arr;
+  }
+}

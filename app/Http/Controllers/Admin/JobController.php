@@ -20,7 +20,10 @@ class JobController extends Controller
    */
   public function index()
   {
-    $jobs = Job::latest()->with('user:users.id,name', 'category:categories.id,name')->get();
+    $jobs = Job::latest()->withCount('applications')->with([
+      'user:users.id,name',
+      'category:categories.id,name'
+    ])->get();
     return view('admin.jobs.index', compact('jobs'));
   }
 
@@ -138,7 +141,7 @@ class JobController extends Controller
    */
   public function show(Job $job)
   {
-    //
+    return view('admin.jobs.show', compact('job'));
   }
 
   /**
@@ -260,7 +263,7 @@ class JobController extends Controller
   {
     $job->delete();
 
-    return redirect()->with('success', 'Job Deleted');
+    return redirect()->route('admin.jobs.index')->with('success', 'Job Deleted');
   }
 
   public function toggleStatus(Job $job)
@@ -277,6 +280,6 @@ class JobController extends Controller
 
     $job->save();
 
-    return redirect()->route('admin.jobs.index')->with('success', $msg);
+    return redirect()->back()->with('success', $msg);
   }
 }
