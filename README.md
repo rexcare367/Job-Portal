@@ -40,17 +40,16 @@ C. Run `npm install` to download all JavaScript dependencies
 
 ## Demo Account Email and Password
 
-**Super Admin**
+### Super Admin
 
 super@gmail.com
 password
 
-
-**Admin**
+### Admin
 admin@gmail.com
 password
 
 
-**User**
+### User
 user@gmail.com
 password
