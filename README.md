@@ -45,9 +45,11 @@ C. Run `npm install` to download all JavaScript dependencies
 super@gmail.com
 password
 
+
 **Admin**
 admin@gmail.com
 password
+
 
 **User**
 user@gmail.com
