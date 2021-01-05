@@ -13,7 +13,7 @@
 
     <script src="{{ asset('js/before_load.js') }}"></script>
     <!-- Scripts -->
-    <script type="application/javascript" src="{{ asset('js/adminlte.min.js') }}"></script>
+    {{--<script type="application/javascript" src="{{ asset('js/adminlte.min.js') }}"></script>--}}
     <script src="{{ asset('js/app.js') }}" defer></script>
     <!-- Fonts -->
     <link rel="dns-prefetch"

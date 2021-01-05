@@ -1,16 +1,4 @@
-// require('select2');
-
-window._ = require('lodash');
-
-require('select2/dist/js/select2.full');
-require('datatables.net/js/jquery.dataTables');
-require('datatables.net-responsive-bs4/js/responsive.bootstrap4');
-require('sweetalert2/dist/sweetalert2.all');
-
-window.Quill = require('quill');
-require('quill/core/quill');
 let Toolbar = require('quill/modules/toolbar');
-
 $(document).ready(function() {
   // DataTable Configuration
   if ($('.datatable').length > 0) {
@@ -26,6 +14,7 @@ $(document).ready(function() {
     $('.select2').select2({
       theme: 'bootstrap4',
       placeholder: '-- Select --',
+      maximumSelectionLength: 5
     });
   }
 
@@ -33,6 +22,7 @@ $(document).ready(function() {
     $('.multiple').select2({
       theme: 'bootstrap4',
       tags: true,
+      maximumSelectionLength: 5
     });
   }
 

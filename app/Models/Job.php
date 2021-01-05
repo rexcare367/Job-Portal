@@ -49,6 +49,11 @@ class Job extends Model
     return $this->belongsTo('App\Models\City');
   }
 
+  public function applications()
+  {
+    return $this->hasMany('App\Models\Application');
+  }
+
   public function scopeActive($query)
   {
     return $query->whereStatus(true);

@@ -9,9 +9,16 @@ body {
   background-color: #fff;
 }
 
-.overflow-hidden {
+.overflow-hidden-lg {
   height: 100vh;
-  overflow: hidden;
+  overflow-y: hidden;
+}
+
+@media (max-width: 990px) {
+  .overflow-hidden-lg {
+    height: auto;
+    overflow-y: auto;
+  }
 }
 
 .navbar-light .navbar-nav .nav-link.btn:hover,
@@ -108,14 +115,22 @@ section.userhome ul {
   background-color: rgba(152, 216, 244, 0.25);
 }
 
-.job-left a {
+.job-left .job-in a {
   font-size: 1.3rem;
   color: #0a66c2;
 }
 
-.job-left a:visited {
+.job-left .job-in a:visited {
   color: #592099;
   text-decoration: underline !important;
+}
+
+@media (max-width: 990px) {
+  .job-left {
+    height: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
 }
 
 .job-right {
@@ -147,5 +162,31 @@ section.userhome ul {
 
 .job-right .job-bottom-info ul li {
   display: block;
+}
+
+@media (max-width: 990px) {
+  .job-right {
+    height: auto;
+    overflow-y: auto;
+  }
+}
+
+.jobs .tags {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  margin-top: 1.2rem;
+}
+
+.jobs .tags li {
+  display: inline-block;
+}
+
+.jobs .tags li div {
+  padding: 0.125rem 0.25rem;
+  background: gray;
+  color: #fff;
+  font-size: 0.75rem;
+  margin-right: 0.25rem;
 }
 

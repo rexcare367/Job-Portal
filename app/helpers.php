@@ -29,7 +29,7 @@ if (!function_exists('renderExperienceOptions')) {
     ];
 
     foreach ($experience as $key => $experience) {
-      $selected = empty($old) ? "" : ($experience["value"] == $old ? "selected" : "");
+      $selected = $experience["value"] == $old ? "selected" : "";
       echo '<option ' . $selected . ' value="' . $experience["value"] . '">' . $experience["label"] . '</option>';
     }
   }
@@ -171,6 +171,18 @@ if (!function_exists('renderGender')) {
         return 'Male and Female';
       default:
         break;
+    }
+  }
+}
+
+if (!function_exists('applicationHasUser')) {
+  function applicationHasUser($applications, $user_id)
+  {
+    foreach ($applications as $appl) {
+      if ($appl['user_id'] == $user_id) {
+
+        return true;
+      }
     }
   }
 }

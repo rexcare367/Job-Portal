@@ -12,7 +12,13 @@ try {
 
   require('bootstrap');
 
-  require('../jobs');
+  require('select2/dist/js/select2.full');
+  require('datatables.net/js/jquery.dataTables');
+  require('datatables.net-responsive-bs4/js/responsive.bootstrap4');
+  require('sweetalert2/dist/sweetalert2.all');
+
+  window.Quill = require('quill');
+  require('quill/core/quill');
 } catch (e) {
   console.log(e);
 }
@@ -26,6 +32,7 @@ try {
 window.axios = require('axios');
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+require('../jobs');
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
@@ -49,3 +56,4 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
+

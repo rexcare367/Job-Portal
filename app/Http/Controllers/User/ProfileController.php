@@ -61,6 +61,7 @@ class ProfileController extends Controller
       'image' => 'nullable|file',
       'job_type' => 'nullable|integer',
       'jobrole' => 'nullable|string',
+      'phone' => 'nullable|string',
       'location' => 'nullable|string',
       'skills' => 'nullable|string',
       'education' => 'nullable|string',
@@ -124,6 +125,7 @@ class ProfileController extends Controller
     $user->update();
 
     $profile->jobrole = $request->jobrole;
+    $profile->phone = $request->phone;
     $profile->image = $imageName;
     $profile->cv = $cvName;
     $profile->education = $request->education;

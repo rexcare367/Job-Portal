@@ -37,7 +37,6 @@
 const route = window.app.url;
 
 export default {
-  name: 'JobLocationSearch',
   data() {
     return {
       searchStr: '',
@@ -50,7 +49,7 @@ export default {
   },
   methods: {
     openSearchLink(result) {
-      const link = route.search + '?keywords=' + encodeURIComponent(this.searchStr) + '&location=' + result;
+      const link = route.search + '?city=' + encodeURIComponent(result) + '&term=' + this.searchStr;
       window.location.href = link;
     },
     onFocus() {
@@ -89,7 +88,7 @@ export default {
       this.results = [];
       this.searching = true;
       axios
-        .get(route.jobCitySearch + `?term=${term}`)
+        .get(route.ajaxSearch + `?city=${term}`)
         .then(resp => {
           this.searching = false;
           this.results = Array.from(new Set(resp.data.map(el => el)));

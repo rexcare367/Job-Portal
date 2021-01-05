@@ -35,7 +35,6 @@
   const route = window.app.url;
 
   export default {
-    name: 'TitleSkillSearch',
     data() {
       return {
         searchStr: '',
@@ -48,7 +47,7 @@
     },
     methods: {
       openSearchLink(result) {
-        const link = route.search + '?keywords=' + encodeURIComponent(result);
+        const link = route.search + '?skill=' + encodeURIComponent(result) + '&term=' + this.searchStr;
         window.location.href = link;
       },
       onArrowDown(){
@@ -88,7 +87,7 @@
         this.results = [];
         this.searching = true;
         axios
-          .get(route.titleSkillSearch + `?term=${term}`)
+          .get(route.ajaxSearch + `?skills=${term}`)
           .then(resp => {
             this.searching = false;
             this.isOpen = true;

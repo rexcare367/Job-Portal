@@ -17,10 +17,8 @@ Route::get('/', 'FrontController@index')->name('welcome');
 Route::get('/search', 'FrontController@search')
   ->name('search')
   ->middleware(['auth', 'role:user']);
-Route::get('/job-skill/search', 'FrontController@jobSkillSearch')
-  ->name('jobskill.search');
-Route::get('/job-city/search', 'FrontController@jobCitySearch')
-  ->name('jobcity.search');
+Route::get('/ajax/search', 'FrontController@ajaxSearch')
+  ->name('ajax.job.search');
 Route::get('/job/{job:slug}', 'FrontController@job')
   ->name('job.view')
   ->middleware(['auth', 'role:user']);

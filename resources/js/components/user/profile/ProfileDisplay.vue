@@ -83,6 +83,12 @@
                   </div>
                 </div>
                 <div class="mb-3 row">
+                  <label for="phone" class="col-sm-2 col-form-label">Phone</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="phone" id="phone" class="form-control" v-model="phone" />
+                  </div>
+                </div>
+                <div class="mb-3 row">
                   <label for="jobrole" class="col-sm-2 col-form-label">Current Job Role</label>
                   <div class="col-sm-10">
                     <input type="text" name="jobrole" id="jobrole" class="form-control" v-model="jobrole" />
@@ -101,7 +107,7 @@
                           ref="image"
                           @change="handleImageUpload()"
                           accept="image/*"
-                        />
+                          />
                         <label class="custom-file-label" for="image">Choose file</label>
                       </div>
                       <div class="input-group-append">
@@ -125,7 +131,7 @@
                       :options="locations"
                       data-placeholder="Select Multiple Job Locations"
                       v-model="selectedLocations"
-                    >
+                      >
                       <option disabled value="">Select one</option>
                     </multi-select2>
                   </div>
@@ -139,7 +145,7 @@
                       :options="skills"
                       data-placeholder="Select Multiple Skills"
                       v-model="selectedSkills"
-                    >
+                      >
                       <option disabled value="">Select one</option>
                     </multi-select2>
                   </div>
@@ -153,7 +159,7 @@
                       :options="jobTypes"
                       data-placeholder="Select Any Job Types"
                       v-model="selectedJobType"
-                    >
+                      >
                       <option disabled value="">Select one</option>
                     </select2>
                   </div>
@@ -168,7 +174,7 @@
                       :options="experiences"
                       data-placeholder="Select Experience you have"
                       v-model="selectedExperience"
-                    >
+                      >
                       <option disabled value="">Select one</option>
                     </select2>
                   </div>
@@ -193,8 +199,8 @@
                           id="cv"
                           ref="cv"
                           @change="handleCVUpload()"
-                          accept="application/msword, application/vnd.ms-powerpoint, application/pdf, image/*"
-                        />
+                          accept=".docx, .doc, .pdf, .jpg, .jpeg"
+                          />
                         <label class="custom-file-label" for="cv">Choose file</label>
                       </div>
                       <div class="input-group-append">
@@ -301,6 +307,7 @@
         data: null,
         name: '',
         jobrole: '',
+        phone: '',
         education: '',
         newImage: '',
         newCV: '',
@@ -372,9 +379,9 @@
         this.selectedExperience = exp;
         this.experienceLabel = this.experiences.find(el => el.id == exp).text;
         this.jobrole = profile.jobrole;
+        this.phone = profile.phone;
       },
       handleCVUpload() {
-        console.log(this.$refs, this.$refs.cv.files[0]);
         this.newCV = this.$refs.cv.files[0];
       },
       handleImageUpload() {
@@ -385,6 +392,7 @@
         const formData = new FormData();
         formData.append('name', this.name);
         formData.append('jobrole', this.jobrole);
+        formData.append('phone', this.phone);
         formData.append('education', this.education);
         formData.append('location', this.selectedLocations);
         formData.append('skills', this.selectedSkills);

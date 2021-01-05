@@ -20,7 +20,7 @@ class JobController extends Controller
    */
   public function index()
   {
-    $jobs = Job::with('user:users.id,name', 'category:categories.id,name')->get();
+    $jobs = Job::latest()->with('user:users.id,name', 'category:categories.id,name')->get();
     return view('admin.jobs.index', compact('jobs'));
   }
 

@@ -11,6 +11,8 @@ const mix = require('laravel-mix');
  */
 
 mix
+  .js('resources/adminlte/js/AdminLTE', 'public/js')
   .js('resources/js/app.js', 'public/js')
   .sass('resources/sass/app.scss', 'public/css')
   .sass('resources/sass/landing.scss', 'public/css');
+
